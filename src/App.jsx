@@ -4,37 +4,37 @@ import './App.css'
 function App() {
 
   const hoverItem = () => {
-    const audio = new Audio('/public/sound/hoveritem.mp3');
+    const audio = new Audio('/sound/hoveritem.mp3');
     audio.volume = 0.3;
     audio.play()
   }
 
   const zoomInApp = () => {
-    const audio = new Audio('/public/sound/zoom-in-app.mp3');
+    const audio = new Audio('/sound/zoom-in-app.mp3');
     audio.volume = 0.3;
     audio.play();
   }
 
   const zoomOutApp = () => {
-    const audio = new Audio('/public/sound/zoom-out-app.mp3');
+    const audio = new Audio('/sound/zoom-out-app.mp3');
     audio.volume = 0.3;
     audio.play();
   }
 
   const hoverBtnMenuApp = () => {
-    const audio = new Audio('/public/sound/hover-menu-app-btn.mp3');
+    const audio = new Audio('/sound/hover-menu-app-btn.mp3');
     audio.volume = 0.3;
     audio.play();
   }
 
   const clickedStartBtn = () => {
-    const audio = new Audio('/public/sound/start-app-sound.mp3');
+    const audio = new Audio('/sound/start-app-sound.mp3');
     audio.volume = 0.3;
     audio.play();
   }
 
   const playConfirm = () => {
-    const audio = new Audio('/public/sound/safety&healthsound.mp3');
+    const audio = new Audio('/sound/safety&healthsound.mp3');
     audio.volume = 0.7;
     audio.play()
   }
@@ -78,7 +78,7 @@ const audioRef = useRef(null);
 const fadeAnimationRef = useRef(null);
 
 const playWiiMenuMusic = () => {
-  const audio = new Audio('/public/sound/Wii Menu Music.mp3');
+  const audio = new Audio('/sound/Wii Menu Music.mp3');
   audio.volume = 0.3;
   audio.loop = true;
   audio.play();
