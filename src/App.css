@@ -201,9 +201,12 @@
   font-family: 'Technology', Arial, sans-serif;
 }
 
+/* App.css */
 .wii-cursor {
-  cursor: url('assets/wii-pointer-smaller.png'), auto;
+  cursor: url('assets/wii-pointer-smaller.png') 16 16, auto !important;
 }
+
+
 
 @keyframes fadeIn {
   from {
