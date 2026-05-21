@@ -1,0 +1,78 @@
+[
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "appboxname": "Portfolio Heitor",
+        "gifappbox": "/src/assets/apps/spinning_dvd-cd.gif",
+        "gifappmenu": "/src/assets/apps/spinning_dvd-cd.gif",
+        "appmenuaudio": ""
+    },
+    {
+        "url": "https://youtube.com",
+        "appboxname": "Eu amo a Jeni",
+        "gifappbox": "/src/assets/apps/appboxgifs/bloodborne.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/bloodborne.gif",
+        "appmenuaudio": "/sound/appMenuAudios/bloodborneAppMenuAudio.mp3"
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "appboxname": "eae",
+        "gifappbox": "/src/assets/apps/appboxgifs/personagif.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/personagif.gif",
+        "appmenuaudio": "/sound/appMenuAudios/persona3AppMenuAudio.mp3"
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Suspense-Yes-Or-No-Game/",
+        "appboxname": "Suspense Yes Or No Game",
+        "gifappbox": "/src/assets/apps/appboxgifs/mariosetup.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/mariosetup.gif",
+        "appmenuaudio": "/sound/appMenuAudios/marioLofiAppMenuAudio.mp3"
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "gifappbox": "",
+        "gifappmenu": "",
+        "appmenuaudio": ""
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "gifappbox": "",
+        "gifappmenu": "",
+        "appmenuaudio": ""
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "gifappbox": "",
+        "gifappmenu": "",
+        "appmenuaudio": ""
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "gifappbox": "",
+        "gifappmenu": "",
+        "appmenuaudio": ""
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "gifappbox": "",
+        "gifappmenu": "",
+        "appmenuaudio": ""
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "gifappbox": "",
+        "gifappmenu": "",
+        "appmenuaudio": ""
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "gifappbox": "",
+        "gifappmenu": "",
+        "appmenuaudio": ""
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "gifappbox": "",
+        "gifappmenu": "",
+        "appmenuaudio": ""
+    }
+]
