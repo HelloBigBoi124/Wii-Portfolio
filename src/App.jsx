@@ -620,18 +620,36 @@ function App() {
                 </div>
 
             {envelopeMenu && (
-              <div className="fixed inset-0 z-50 w-screen h-135 bg-gray-300 flex justify-center  transition-all duration-500">
-                <img 
+
+              <div className="fixed inset-0 z-50 w-screen h-135 bg-gray-300 flex justify-center items-center  transition-all duration-500">
+                <img
                   onClick={() => handleOpenEnvelope()}
                   className={`
-                  ${showEnvelope ? 'animate-[bounce_0.5s_ease-out] hover:scale-110 scale-100' : 'scale-0'} 
+                  ${showEnvelope && !openedEnvelope ? 'animate-[bounce_0.5s_ease-out] hover:scale-110 scale-100' : 'scale-0'}
                   object-cover fixed bg-white rounded-xs w-[200px] h-[135px] top-[calc(50vh-75px)] shadow-2xl transform transition-all duration-200`}
                   src="/src/assets/wiimessageboardassets/envelopecenter.png">
+
                 </img>
-                <div className={`fixed ${openedEnvelope ? 'h-screen w-[300px] z-100 border-2 border-white' : 'h-0 w-0 z-0'} transition-all duration-300 ease-in-out   bg-gray-300`}>
+
+                <div
+                  style={{
+                    transformOrigin: 'center center',
+                    transform: openedEnvelope ? 'scaleY(1) scaleX(1)' : 'scaleY(0) scaleX(0)',
+                    top: '50%',
+                    left: '50%',
+                    translate: '-50% -50%',
+                  }}
+                  className={`z-999 fixed w-[50vw] h-[100vh] rounded-4xl shadow-xl border-5 border-white transition-all duration-300 ease-in-out bg-gray-300`}>
                   
+                  {/* Div interna: só cuida do layout */}
+                  <div className="flex flex-col gap-5 py-10 w-full h-full items-center">
+                    <h1 className="text-white mt-10 font-semibold text-3xl">Curriculum</h1>
+                    <div className="bg-white flex-1 w-full rounded-2xl"></div>
+                  </div>
+
                 </div>
               </div>
+
             )}
             
             <section>

@@ -63,7 +63,7 @@
         "appmenuaudio": "/sound/appMenuAudios/flamengoAppMenuAudio.mp3"
     },
     {
-        "url": "https://www.roblox.com/pt/users/148169320/profile",
+        "url": "https://www.youtube.com/watch?v=p5yUKjOOWvM",
         "appboxname": "Arthurphii",
         "gifappbox": "/src/assets/apps/appboxgifs/arthurmorgan.gif",
         "gifappmenu": "/src/assets/apps/appmenugifs/arthurmorgan.gif",
@@ -78,9 +78,9 @@
     },
     {
         "url": "",
-        "appboxname": "Bloodborne II",
-        "gifappbox": "/src/assets/apps/appboxgifs/bloodborne.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/bloodborne.gif",
-        "appmenuaudio": "/sound/appMenuAudios/bloodborneAppMenuAudio.mp3"
+        "appboxname": "Push Push Push",
+        "gifappbox": "/src/assets/apps/appboxgifs/diretormundo.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/diretormundo.gif",
+        "appmenuaudio": "/sound/appMenuAudios/pushAppMenuAudio.mp3"
     }
 ]
