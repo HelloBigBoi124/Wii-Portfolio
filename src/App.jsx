@@ -46,8 +46,14 @@ function App() {
     audio.loop = true;
     audio.play();
     audioRef.current = audio;
-
   };
+
+    const playOpenEnvelope = () =>  {
+      const audio = new Audio('/sound/envelopeopenaudio.mp3')
+      audio.volume = 0.3;
+      audio.play()
+    }
+
 
   const appObjects = appJson
 
@@ -86,7 +92,7 @@ function App() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-
+      
       let hours = now.getHours();
       const minutes = String(now.getMinutes()).padStart(2, "0");
 
@@ -216,9 +222,11 @@ function App() {
 
       setIsZoomed(index);
 
-      setTimeout(() => {
-        setIsAnimating(true);
-      }, 10);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsAnimating(true);
+        });
+      });
 
     }, 100);
   };
@@ -265,6 +273,9 @@ function App() {
     setTimeout(() => {
       !openedEnvelope ? setOpenedEnvelope(true) : setOpenedEnvelope(false)
     }, 200)
+      if (!openedEnvelope) {
+        playOpenEnvelope();
+      }
       
   }
 
@@ -674,7 +685,7 @@ function App() {
   onMouseEnter={handleMouseEnter}
   onMouseLeave={handleMouseLeave}
   style={{
-    transition: clickedEnvelopeBtn ? 'none' : 'all 100ms',
+    transition: clickedEnvelopeBtn ? 'none' : 'all 300ms',
   }}
   className={`
   ${clickedEnvelopeBtn ? 'bg-white text-white border-white scale-90': 'bg-gray-200 border-blue-400 scale-100 hover:scale-110' } 
@@ -693,7 +704,7 @@ function App() {
                         transition: clickedEnvelopeBtn ? 'none' : 'all 100ms',
                       }}
                       className={`${clickedEnvelopeBtn ? 'bg-white text-white border-white scale-90': 'bg-gray-200 border-blue-400 scale-100 hover:scale-110'} transition-border rotate-180 ease-in-out rounded-full border-4 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl -translate-x-6 translate-y-[37px] hover:shadow-[0_0_10px_rgba(59,130,246,0.7)]`}>
-                      <span className={`${clickedEnvelopeBtn ? 'bg-white text-white': 'bg-gray-400 text-gray-300'}   rounded-xl font-semibold !py-2 !px-3`}>Wii</span>
+                      <span className={`${clickedEnvelopeBtn ? 'bg-white text-white' : 'bg-gray-400 text-gray-300'}   rounded-xl font-semibold !py-2 !px-3`}>Wii</span>
                     </div>
                   </div>
                 </div>

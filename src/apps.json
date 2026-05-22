@@ -1,78 +1,86 @@
 [
     {
-        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "appboxname": "Portfolio Heitor",
+        "url": "",
+        "appboxname": "Disc Loader",
         "gifappbox": "/src/assets/apps/spinning_dvd-cd.gif",
         "gifappmenu": "/src/assets/apps/spinning_dvd-cd.gif",
-        "appmenuaudio": ""
+        "appmenuaudio": "/sound/appMenuAudios/cdloaderAppMenuAudio.mp3"
     },
     {
-        "url": "https://youtube.com",
-        "appboxname": "Eu amo a Jeni",
-        "gifappbox": "/src/assets/apps/appboxgifs/bloodborne.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/bloodborne.gif",
-        "appmenuaudio": "/sound/appMenuAudios/bloodborneAppMenuAudio.mp3"
-    },
-    {
-        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "appboxname": "eae",
-        "gifappbox": "/src/assets/apps/appboxgifs/personagif.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/personagif.gif",
-        "appmenuaudio": "/sound/appMenuAudios/persona3AppMenuAudio.mp3"
+        "url": "",
+        "appboxname": "Mii Channel",
+        "gifappbox": "/src/assets/apps/appboxgifs/miichannel.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/miichannel.gif",
+        "appmenuaudio": "/sound/appMenuAudios/miichannelAppMenuAudio.mp3"
     },
     {
         "url": "https://hellobigboi124.github.io/Suspense-Yes-Or-No-Game/",
-        "appboxname": "Suspense Yes Or No Game",
+        "appboxname": "J+H",
+        "gifappbox": "/src/assets/apps/appboxgifs/love.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/love.gif",
+        "appmenuaudio": "/sound/appMenuAudios/loveAppMenuAudio.mp3"
+    },
+    {
+        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
+        "appboxname": "Portfolio Profissional de Heitor",
         "gifappbox": "/src/assets/apps/appboxgifs/mariosetup.gif",
         "gifappmenu": "/src/assets/apps/appmenugifs/mariosetup.gif",
         "appmenuaudio": "/sound/appMenuAudios/marioLofiAppMenuAudio.mp3"
     },
     {
         "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "gifappbox": "",
-        "gifappmenu": "",
-        "appmenuaudio": ""
+        "appboxname": "Persona 3",
+        "gifappbox": "/src/assets/apps/appboxgifs/personagif.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/personagif.gif",
+        "appmenuaudio": "/sound/appMenuAudios/persona3AppMenuAudio.mp3"
     },
     {
-        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "gifappbox": "",
-        "gifappmenu": "",
-        "appmenuaudio": ""
+        "url": "https://neal.fun/size-of-space/",
+        "appboxname": "Outer Wilds",
+        "gifappbox": "/src/assets/apps/appboxgifs/outerwilds.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/outerwilds.gif",
+        "appmenuaudio": "/sound/appMenuAudios/outerwildsAppMenu.mp3"
     },
     {
-        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "gifappbox": "",
-        "gifappmenu": "",
-        "appmenuaudio": ""
+        "url": "",
+        "appboxname": "Tuka Donka",
+        "gifappbox": "/src/assets/apps/appboxgifs/tukadonka.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/tukadonka.gif",
+        "appmenuaudio": "/sound/appMenuAudios/tukadonkaAppMenuAudio.mp3"
     },
     {
-        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "gifappbox": "",
-        "gifappmenu": "",
-        "appmenuaudio": ""
+        "url": "",
+        "appboxname": "Patrick Zen",
+        "gifappbox": "/src/assets/apps/appboxgifs/patrickzen.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/patrickzen.gif",
+        "appmenuaudio": "/sound/appMenuAudios/patrickzenAppMenuAudio.mp3"
     },
     {
-        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "gifappbox": "",
-        "gifappmenu": "",
-        "appmenuaudio": ""
+        "url": "https://www.flamengo.com.br",
+        "appboxname": "Flamengo Hub",
+        "gifappbox": "/src/assets/apps/appboxgifs/urubuflamengo.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/urubuflamengo.gif",
+        "appmenuaudio": "/sound/appMenuAudios/flamengoAppMenuAudio.mp3"
     },
     {
-        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "gifappbox": "",
-        "gifappmenu": "",
-        "appmenuaudio": ""
+        "url": "https://www.roblox.com/pt/users/148169320/profile",
+        "appboxname": "Arthurphii",
+        "gifappbox": "/src/assets/apps/appboxgifs/arthurmorgan.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/arthurmorgan.gif",
+        "appmenuaudio": "/sound/appMenuAudios/arthurmorganAppMenuAudio.mp3"
     },
     {
-        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "gifappbox": "",
-        "gifappmenu": "",
-        "appmenuaudio": ""
+        "url": "",
+        "appboxname": "Chicken Jockie",
+        "gifappbox": "/src/assets/apps/appboxgifs/lavachicken.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/lavachicken.gif",
+        "appmenuaudio": "/sound/appMenuAudios/lavachickenAppMenuAudio.mp3"
     },
     {
-        "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
-        "gifappbox": "",
-        "gifappmenu": "",
-        "appmenuaudio": ""
+        "url": "",
+        "appboxname": "Bloodborne II",
+        "gifappbox": "/src/assets/apps/appboxgifs/bloodborne.gif",
+        "gifappmenu": "/src/assets/apps/appmenugifs/bloodborne.gif",
+        "appmenuaudio": "/sound/appMenuAudios/bloodborneAppMenuAudio.mp3"
     }
 ]
