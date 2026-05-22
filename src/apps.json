@@ -2,85 +2,85 @@
     {
         "url": "",
         "appboxname": "Disc Loader",
-        "gifappbox": "/src/assets/apps/spinning_dvd-cd.gif",
-        "gifappmenu": "/src/assets/apps/spinning_dvd-cd.gif",
+        "gifappbox": "/assets/apps/spinning_dvd-cd.gif",
+        "gifappmenu": "/assets/apps/spinning_dvd-cd.gif",
         "appmenuaudio": "/sound/appMenuAudios/cdloaderAppMenuAudio.mp3"
     },
     {
         "url": "",
         "appboxname": "Mii Channel",
-        "gifappbox": "/src/assets/apps/appboxgifs/miichannel.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/miichannel.gif",
+        "gifappbox": "/assets/apps/appboxgifs/miichannel.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/miichannel.gif",
         "appmenuaudio": "/sound/appMenuAudios/miichannelAppMenuAudio.mp3"
     },
     {
         "url": "https://hellobigboi124.github.io/Suspense-Yes-Or-No-Game/",
         "appboxname": "J+H",
-        "gifappbox": "/src/assets/apps/appboxgifs/love.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/love.gif",
+        "gifappbox": "/assets/apps/appboxgifs/love.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/love.gif",
         "appmenuaudio": "/sound/appMenuAudios/loveAppMenuAudio.mp3"
     },
     {
         "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
         "appboxname": "Portfolio Profissional de Heitor",
-        "gifappbox": "/src/assets/apps/appboxgifs/mariosetup.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/mariosetup.gif",
+        "gifappbox": "/assets/apps/appboxgifs/mariosetup.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/mariosetup.gif",
         "appmenuaudio": "/sound/appMenuAudios/marioLofiAppMenuAudio.mp3"
     },
     {
         "url": "https://hellobigboi124.github.io/Portfolio-heitor/",
         "appboxname": "Persona 3",
-        "gifappbox": "/src/assets/apps/appboxgifs/personagif.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/personagif.gif",
+        "gifappbox": "/assets/apps/appboxgifs/personagif.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/personagif.gif",
         "appmenuaudio": "/sound/appMenuAudios/persona3AppMenuAudio.mp3"
     },
     {
         "url": "https://neal.fun/size-of-space/",
         "appboxname": "Outer Wilds",
-        "gifappbox": "/src/assets/apps/appboxgifs/outerwilds.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/outerwilds.gif",
+        "gifappbox": "/assets/apps/appboxgifs/outerwilds.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/outerwilds.gif",
         "appmenuaudio": "/sound/appMenuAudios/outerwildsAppMenu.mp3"
     },
     {
         "url": "",
         "appboxname": "Tuka Donka",
-        "gifappbox": "/src/assets/apps/appboxgifs/tukadonka.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/tukadonka.gif",
+        "gifappbox": "/assets/apps/appboxgifs/tukadonka.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/tukadonka.gif",
         "appmenuaudio": "/sound/appMenuAudios/tukadonkaAppMenuAudio.mp3"
     },
     {
         "url": "",
         "appboxname": "Patrick Zen",
-        "gifappbox": "/src/assets/apps/appboxgifs/patrickzen.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/patrickzen.gif",
+        "gifappbox": "/assets/apps/appboxgifs/patrickzen.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/patrickzen.gif",
         "appmenuaudio": "/sound/appMenuAudios/patrickzenAppMenuAudio.mp3"
     },
     {
         "url": "https://www.flamengo.com.br",
         "appboxname": "Flamengo Hub",
-        "gifappbox": "/src/assets/apps/appboxgifs/urubuflamengo.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/urubuflamengo.gif",
+        "gifappbox": "/assets/apps/appboxgifs/urubuflamengo.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/urubuflamengo.gif",
         "appmenuaudio": "/sound/appMenuAudios/flamengoAppMenuAudio.mp3"
     },
     {
         "url": "https://www.youtube.com/watch?v=p5yUKjOOWvM",
         "appboxname": "Arthurphii",
-        "gifappbox": "/src/assets/apps/appboxgifs/arthurmorgan.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/arthurmorgan.gif",
+        "gifappbox": "/assets/apps/appboxgifs/arthurmorgan.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/arthurmorgan.gif",
         "appmenuaudio": "/sound/appMenuAudios/arthurmorganAppMenuAudio.mp3"
     },
     {
         "url": "",
         "appboxname": "Chicken Jockie",
-        "gifappbox": "/src/assets/apps/appboxgifs/lavachicken.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/lavachicken.gif",
+        "gifappbox": "/assets/apps/appboxgifs/lavachicken.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/lavachicken.gif",
         "appmenuaudio": "/sound/appMenuAudios/lavachickenAppMenuAudio.mp3"
     },
     {
         "url": "",
         "appboxname": "Push Push Push",
-        "gifappbox": "/src/assets/apps/appboxgifs/diretormundo.gif",
-        "gifappmenu": "/src/assets/apps/appmenugifs/diretormundo.gif",
+        "gifappbox": "/assets/apps/appboxgifs/diretormundo.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/diretormundo.gif",
         "appmenuaudio": "/sound/appMenuAudios/pushAppMenuAudio.mp3"
     }
 ]
