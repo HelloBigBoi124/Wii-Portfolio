@@ -625,7 +625,7 @@ function App() {
                   className={`
                   ${showEnvelope && !openedEnvelope ? 'animate-[bounce_0.5s_ease-out] hover:scale-110 scale-100' : 'scale-0'}
                   object-cover fixed bg-white rounded-xs w-[200px] h-[135px] top-[calc(50vh-75px)] shadow-2xl transform transition-all duration-200`}
-                  src="/src/assets/wiimessageboardassets/envelopecenter.png">
+                  src="/assets/wiimessageboardassets/envelopecenter.png">
 
                 </img>
 
@@ -658,10 +658,10 @@ function App() {
                   inset-shadow-sm w-lg transition-all duration-350 bg-gray-300 border-4 border-gray-400 rounded-full  h-40 p-5 flex justify-between text-center translate-y-6`}>
                   <div className={`flex grid-row gap-2 translate-x-6 translate-y-[37px]`}>
                     <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={` rotate-180 ease-in-out rounded-full bg-gray-200 border-4 border-blue-400 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl   hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110`}>
-                      <img className={`rounded-sm size-17`} src="src/assets/calendarbtn.png" alt="calendar-button"></img>
+                      <img className={`rounded-sm size-17`} src="/assets/calendarbtn.png" alt="calendar-button"></img>
                     </div>
                     <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={` rotate-180 ease-in-out rounded-full bg-gray-200 border-4 border-blue-400 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl   hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110`}>
-                      <img className={`rounded-sm size-15 h-20 -translate-y-1`} src="/src/assets/notepad.png" alt="calendar-button"></img>
+                      <img className={`rounded-sm size-15 h-20 -translate-y-1`} src="/assets/notepad.png" alt="calendar-button"></img>
                     </div>
                   </div>
                   <div onClick={() => {
