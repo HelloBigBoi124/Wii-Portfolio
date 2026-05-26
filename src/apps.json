@@ -7,11 +7,11 @@
         "appmenuaudio": "/sound/appMenuAudios/cdloaderAppMenuAudio.mp3"
     },
     {
-        "url": "",
-        "appboxname": "Mii Channel",
-        "gifappbox": "/assets/apps/appboxgifs/miichannel.gif",
-        "gifappmenu": "/assets/apps/appmenugifs/miichannel.gif",
-        "appmenuaudio": "/sound/appMenuAudios/miichannelAppMenuAudio.mp3"
+        "url": "https://www.instagram.com/jenifer_dias.s/",
+        "appboxname": "Hello, Jeni!",
+        "gifappbox": "/assets/apps/appboxgifs/kitty.gif",
+        "gifappmenu": "/assets/apps/appmenugifs/kitty.gif",
+        "appmenuaudio": "/sound/appMenuAudios/2000AppMenuAudio.mp3"
     },
     {
         "url": "https://hellobigboi124.github.io/Suspense-Yes-Or-No-Game/",

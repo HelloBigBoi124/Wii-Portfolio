@@ -48,11 +48,11 @@ function App() {
     audioRef.current = audio;
   };
 
-    const playOpenEnvelope = () =>  {
-      const audio = new Audio('/sound/envelopeopenaudio.mp3')
-      audio.volume = 0.3;
-      audio.play()
-    }
+  const playOpenEnvelope = () => {
+    const audio = new Audio('/sound/envelopeopenaudio.mp3')
+    audio.volume = 0.3;
+    audio.play()
+  }
 
 
   const appObjects = appJson
@@ -62,26 +62,38 @@ function App() {
   const userReaded = useRef(false);
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.code === "Space" && !userReaded.current) {
-        userReaded.current = true
-        playConfirm();
+  const startExperience = () => {
+    if (!userReaded.current) {
+      userReaded.current = true
+      playConfirm();
+      setTimeout(() => {
+        setFadeOut(true)
         setTimeout(() => {
-          setFadeOut(true)
-          setTimeout(() => {
-            setShowWarning(false);
-            playWiiMenuMusic();
-          }, 2000)
+          setShowWarning(false);
+          playWiiMenuMusic();
         }, 2000)
-      }
+      }, 2000)
     }
+  }
 
-    window.addEventListener("keydown", handleKeyDown);
+  const handleKeyDown = (event) => {
+    if (event.code === "Space") {
+      startExperience();
+    }
+  }
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+  const handleClick = () => {
+    startExperience();
+  }
+
+  window.addEventListener("keydown", handleKeyDown);
+  window.addEventListener("click", handleClick);
+
+  return () => {
+    window.removeEventListener("keydown", handleKeyDown);
+    window.removeEventListener("click", handleClick);
+  };
+}, []);
 
   const [time, setTime] = useState("");
   const [period, setPeriod] = useState("");
@@ -92,7 +104,7 @@ function App() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      
+
       let hours = now.getHours();
       const minutes = String(now.getMinutes()).padStart(2, "0");
 
@@ -267,16 +279,65 @@ function App() {
     }, 60)
   }
 
+  const [backIndexMenu, setBackIndexMenu] = useState(null)
+
+  const closeIndexedMenu = (index) => {
+    switch(index) {
+      case 1:
+        setOpenedEnvelope(false); 
+        break;
+      case 2:
+        setIsCalendarAnimating(false);
+        setTimeout(() => {
+          setOpenedCalendarMenu(false);
+        }, 500)
+        break;
+      default:
+        break;
+    }
+  }
+
   const [openedEnvelope, setOpenedEnvelope] = useState(false);
 
   const handleOpenEnvelope = () => {
     setTimeout(() => {
-      !openedEnvelope ? setOpenedEnvelope(true) : setOpenedEnvelope(false)
-    }, 200)
       if (!openedEnvelope) {
-        playOpenEnvelope();
+        setOpenedEnvelope(true)
       }
-      
+    }, 200)
+    if (!openedEnvelope) {
+      playOpenEnvelope();
+    }
+    setBackIndexMenu(1)
+  }
+
+  const [clickedCalendarBtn, setClickedCalendarBtn] = useState(false);
+  const handleCalendarBtn = () => {
+    setClickedCalendarBtn(true);
+    setTimeout(() => {
+      setClickedCalendarBtn(false)
+    }, 60)
+  }
+
+  const [openedCalendarMenu, setOpenedCalendarMenu] = useState(false);
+  const [isCalendarAnimating, setIsCalendarAnimating] = useState(false);
+
+  const handleOpenCalendarMenu = () => {
+      setOpenedCalendarMenu(true);
+      setBackIndexMenu(2)
+      setTimeout(() => {
+        setIsCalendarAnimating(true);
+      }, 10)
+  }
+
+
+
+  const [clickedNotepadBtn, setClickedNotepadBtn] = useState(false);
+  const handleNotepadBtn = () => {
+    setClickedNotepadBtn(true);
+    setTimeout(() => {
+      setClickedNotepadBtn(false)
+    }, 60)
   }
 
   const [isStarting, setIsStarting] = useState(false);
@@ -314,37 +375,37 @@ function App() {
 
   const [envelopeMenu, setEnvelopeMenu] = useState(false);
   const [isEnvelopeAnimating, setIsEnvelopeAnimating] = useState(false)
-  const [envelopeContent, setEnvelopeContent] = useState(null); 
-  const [showEnvelope, setShowEnvelope] = useState(false);                                                    
+  const [envelopeContent, setEnvelopeContent] = useState(null);
+  const [showEnvelope, setShowEnvelope] = useState(false);
 
   const changeToEnvelopeMenu = () => {
-  if (!envelopeMenu) {
-    // PRIMEIRO: anima os apps para cima
-    setIsEnvelopeAnimating(true);
-    
-    // DEPOIS: mostra o envelope (após a animação dos apps)
-    setTimeout(() => {
-      setEnvelopeMenu(true);
-      
+    if (!envelopeMenu) {
+      // PRIMEIRO: anima os apps para cima
+      setIsEnvelopeAnimating(true);
+
+      // DEPOIS: mostra o envelope (após a animação dos apps)
       setTimeout(() => {
-        setShowEnvelope(true);
-      }, 50);
-    }, 600); // 700ms = duração da transição dos apps
-  } else {
-    // PRIMEIRO: esconde o envelope
-    setShowEnvelope(false);
-    
-    // DEPOIS: remove o envelope
-    setTimeout(() => {
-      setEnvelopeMenu(false);
-      
-      // FINALMENTE: traz os apps de volta
+        setEnvelopeMenu(true);
+
+        setTimeout(() => {
+          setShowEnvelope(true);
+        }, 50);
+      }, 600); // 700ms = duração da transição dos apps
+    } else {
+      // PRIMEIRO: esconde o envelope
+      setShowEnvelope(false);
+
+      // DEPOIS: remove o envelope
       setTimeout(() => {
-        setIsEnvelopeAnimating(false);
-      }, 50);
-    }, 300);
+        setEnvelopeMenu(false);
+
+        // FINALMENTE: traz os apps de volta
+        setTimeout(() => {
+          setIsEnvelopeAnimating(false);
+        }, 50);
+      }, 300);
+    }
   }
-}
 
 
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -562,7 +623,7 @@ function App() {
             also online at<br />
             <a className="cursor-none">www.nintendo.com/healthsafety/</a>
           </p>
-          <h2 className={`text-white flex flex-row justify-center items-center text-2xl font-semibold mb-5 ${fadeOut ? 'animate-none' : 'animate-pulse'}`}>Press SPACE to continue.</h2>
+          <h2 className={`text-white flex flex-row justify-center items-center text-2xl font-semibold mb-5 ${fadeOut ? 'animate-none' : 'animate-pulse'}`}>Press SPACE or CLICK to continue.</h2>
         </div>
       )}
 
@@ -570,52 +631,52 @@ function App() {
         <div className={`w-screen min-h-screen bg-gray-300 wii-cursor select-none transition-opacity duration-300 fade-in`}>
           <div className={` w-screen min-h-screen`}>
             <div className={`${!envelopeMenu ? 'relative z-10' : 'relative z-0'} ${isEnvelopeAnimating ? '-translate-y-full' : 'translate-y-0'} border-b-3 border-blue-400 transition-all duration-600 bg-[repeating-linear-gradient(0deg,_#fff,_#fff_1px,_transparent_1px,_transparent_5px)]`}>
-            <section className={`flex justify-center wii-cursor`}>
-              <div className="grid grid-cols-4 gap-2 mt-10 cards-container">
-                {[...Array(12)].map((_, i) => (
-                  <div key={i} className="wrapper relative">
-                    <div
-                      style={{
-                        backgroundImage: `url(${appObjects[i].gifappbox})`
-                      }}
-                      ref={el => cardRefs.current[i] = el}
-                      onClick={() => handleEnterApp(i)}
-                      onMouseEnter={() => handleMouseEnter(i)}
-                      onMouseLeave={() => handleMouseLeave(i)}
-                      className="w-[280px] h-[150px] bg-white border-[3px] border-gray-400 rounded-3xl hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300"
-                    >
-                      {appObjects[i]?.gifappbox && (
-                        <img
-                          src={appObjects[i].gifappbox}
-                          alt={`App ${i + 1}`}
-                          className="w-full h-full object-cover rounded-3xl"
-                        />
-                      )}
-
-                    </div>
-                    {(
+              <section className={`flex justify-center wii-cursor`}>
+                <div className="grid grid-cols-4 gap-2 mt-10 cards-container">
+                  {[...Array(12)].map((_, i) => (
+                    <div key={i} className="wrapper relative">
                       <div
-                        className={`${showAppToolTip === i
-                          ? 'opacity-100 scale-110 translate-y-0 z-10'
-                          : 'opacity-0 scale-100 pointer-events-none z-0'
-                          } transition-all absolute  left-1/2 transform -translate-x-1/2 top-[160px] w-[280px] min-h-[50px] flex justify-center items-center bg-white border-2 border-gray-400 py-1 px-3 rounded-full text-2xl font-semibold`}
-
+                        style={{
+                          backgroundImage: `url(${appObjects[i].gifappbox})`
+                        }}
+                        ref={el => cardRefs.current[i] = el}
+                        onClick={() => handleEnterApp(i)}
+                        onMouseEnter={() => handleMouseEnter(i)}
+                        onMouseLeave={() => handleMouseLeave(i)}
+                        className="w-[280px] h-[150px] bg-white border-[3px] border-gray-400 rounded-3xl hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300"
                       >
-                        <span className="text-gray-500">{appObjects[i].appboxname}</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
+                        {appObjects[i]?.gifappbox && (
+                          <img
+                            src={appObjects[i].gifappbox}
+                            alt={`App ${i + 1}`}
+                            className="w-full h-full object-cover rounded-3xl"
+                          />
+                        )}
 
-            <section>
-              <div className={`flex justify-center items-end wii-cursor`}>
-                <h1 className="text-8xl clock font-bold tracking-widest">{time}</h1>
-                <p className="text-4xl font-semibold tracking-wider mx-5">{period}</p>
-              </div>
-            </section>
+                      </div>
+                      {(
+                        <div
+                          className={`${showAppToolTip === i
+                            ? 'opacity-100 scale-110 translate-y-0 z-10'
+                            : 'opacity-0 scale-100 pointer-events-none z-0'
+                            } transition-all absolute  left-1/2 transform -translate-x-1/2 top-[160px] w-[280px] min-h-[50px] flex justify-center items-center bg-white border-2 border-gray-400 py-1 px-3 rounded-full text-2xl font-semibold`}
+
+                        >
+                          <span className="text-gray-500">{appObjects[i].appboxname}</span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
+              </section>
+
+              <section>
+                <div className={`flex justify-center items-end wii-cursor`}>
+                  <h1 className="text-8xl clock font-bold tracking-widest">{time}</h1>
+                  <p className="text-4xl font-semibold tracking-wider mx-5">{period}</p>
+                </div>
+              </section>
+            </div>
 
             {envelopeMenu && (
 
@@ -624,7 +685,7 @@ function App() {
                   onClick={() => handleOpenEnvelope()}
                   className={`
                   ${showEnvelope && !openedEnvelope ? 'animate-[bounce_0.5s_ease-out] hover:scale-110 scale-100' : 'scale-0'}
-                  object-cover fixed bg-white rounded-xs w-[200px] h-[135px] top-[calc(50vh-75px)] shadow-2xl transform transition-all duration-200`}
+                  select-none drag-none object-cover fixed bg-white rounded-xs w-[200px] h-[135px] top-[calc(50vh-75px)] shadow-2xl transform transition-all duration-200`}
                   src="/assets/wiimessageboardassets/envelopecenter.png">
 
                 </img>
@@ -638,7 +699,7 @@ function App() {
                     translate: '-50% -50%',
                   }}
                   className={`z-999 fixed w-[50vw] h-[100vh] rounded-4xl shadow-xl border-5 border-white transition-all duration-300 ease-in-out bg-gray-300`}>
-                  
+
                   {/* Div interna: só cuida do layout */}
                   <div className="flex flex-col gap-5 py-10 w-full h-full items-center">
                     <h1 className="text-white mt-10 font-semibold text-3xl">Curriculum</h1>
@@ -649,77 +710,102 @@ function App() {
               </div>
 
             )}
-            
+
+            {openedCalendarMenu && (
+              <div className={`${isCalendarAnimating ? 'bg-gray-200/80' : 'bg-gray-200/0'} fixed inset-0 z-99 w-screen h-screen flex justify-center items-center transition-all duration-500`}>
+                <div className={`${isCalendarAnimating ? 'calendar-is-falling' : 'calendar-is-ascending' } shadow-xl  bg-gray-400 border-4 border-white w-[50vw] h-[calc(100vh-300px)]`}>
+
+                  
+                </div>
+              </div>
+            )}
+
             <section>
               <div className={`${isEnvelopeAnimating ? 'inset-shadow-none' : 'inset-shadow-sm'} transition-all bg-gray-300 h-screen flex justify-between  wii-cursor`}>
                 <div className={`
-                  ${openedEnvelope ? '-translate-x-150' : '-translate-x-50'}
-                  ${isEnvelopeAnimating  ? '-rotate-180 -translate-x-50' : 'rotate-0 -translate-x-80'} 
+                  ${openedEnvelope || openedCalendarMenu ? '-translate-x-150' : '-translate-x-50'}
+                  ${isEnvelopeAnimating ? '-rotate-180 -translate-x-50' : 'rotate-0 -translate-x-80'} 
                   inset-shadow-sm w-lg transition-all duration-350 bg-gray-300 border-4 border-gray-400 rounded-full  h-40 p-5 flex justify-between text-center translate-y-6`}>
                   <div className={`flex grid-row gap-2 translate-x-6 translate-y-[37px]`}>
-                    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={` rotate-180 ease-in-out rounded-full bg-gray-200 border-4 border-blue-400 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl   hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110`}>
-                      <img className={`rounded-sm size-17`} src="/assets/calendarbtn.png" alt="calendar-button"></img>
+                    <div id="calendar" onClick={() => {
+                      clickedConfirmBtn();
+                      handleCalendarBtn();
+                      handleOpenCalendarMenu();
+                    }} 
+                    style={{
+                        transition: clickedEnvelopeBtn ? 'none' : 'all 100ms',
+                      }}
+                      onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={`${clickedCalendarBtn ? 'bg-white border-white scale-90 hover:border-white' : 'bg-gray-200 border-blue-400 hover:scale-110  scale-100 hover:border-blue-400'} rotate-180 ease-in-out rounded-full  border-4  w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl    hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all  `}>
+                      <img className={`${clickedCalendarBtn ? 'opacity-0' : 'opacity-100'} rounded-sm size-17`} src="/assets/calendarbtn.png" alt="calendar-button"></img>
                     </div>
-                    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={` rotate-180 ease-in-out rounded-full bg-gray-200 border-4 border-blue-400 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl   hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110`}>
-                      <img className={`rounded-sm size-15 h-20 -translate-y-1`} src="/assets/notepad.png" alt="calendar-button"></img>
+                    <div id="notepad" onClick={() => {
+                      clickedConfirmBtn();
+                      handleNotepadBtn();
+                    }} 
+                    style={{
+                        transition: clickedEnvelopeBtn ? 'none' : 'all 100ms',
+                      }}
+                    onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={`${clickedNotepadBtn ? 'bg-white border-white scale-90 hover:border-white' : 'bg-gray-200 border-blue-400 hover:scale-110 scale-100 hover:border-blue-400'} rotate-180 ease-in-out rounded-full border-4 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl    hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all`}>
+                      <img className={`${clickedNotepadBtn ? 'opacity-0' : 'opacity-100'} select-none drag-none rounded-sm size-15 h-20 -translate-y-1`} src="/assets/notepad.png" alt="calendar-button"></img>
                     </div>
                   </div>
                   <div onClick={() => {
                     clickedConfirmBtn()
-                  }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="text-gray-400 rounded-full bg-gray-200 border-4 border-blue-400 w-30 h-30 flex justify-center items-center font-semibold text-4xl shadow-2xl -translate-x-6 hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110">Wii</div>
+                  }} 
+                  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="text-gray-400 rounded-full bg-gray-200 border-4 border-blue-400 w-30 h-30 flex justify-center items-center font-semibold text-4xl shadow-2xl -translate-x-6 hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110">Wii</div>
                 </div>
                 <div className={`
-                  ${openedEnvelope ? '-translate-x-50' : '-translate-x-150'}
+                  ${openedEnvelope || openedCalendarMenu ? '-translate-x-50' : '-translate-x-150'}
                   ${isEnvelopeAnimating && openedEnvelope ? '' : ''} 
-                  absolute inset-shadow-sm w-lg transition-all duration-350 bg-gray-300 border-4 border-gray-400 rounded-full  h-40 p-5 flex justify-between text-center translate-y-6`}>
+                  z-999 absolute inset-shadow-sm w-lg transition-all duration-350 bg-gray-300 border-4 border-gray-400 rounded-full  h-40 p-5 flex justify-between text-center translate-y-6`}>
                   <div className={`flex justify-end -translate-x-6 w-full`}>
                     <div
                       onClick={() => {
-                        handleOpenEnvelope()
-                        clickedConfirmBtn()
+                        closeIndexedMenu(backIndexMenu)
+                        playConfirm()
                       }}
-                      onMouseEnter={handleMouseEnter} 
-                      onMouseLeave={handleMouseLeave} 
-                      className={`text-gray-600 font-semibold ease-in-out rounded-full bg-gray-200 border-4 border-blue-400 w-50 h-30 flex justify-center items-center  text-4xl shadow-2xl   hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110`}>
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                      className={`text-gray-600 font-semibold ease-in-out rounded-full bg-gray-200 border-4 border-blue-400 w-60 h-30 flex justify-center items-center  text-4xl shadow-2xl   hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110`}>
                       Back
                     </div>
                   </div>
-                  
+
                 </div>
                 <h1 className="text-gray-500 font-semibold text-5xl mt-2 -translate-x-15">{dayWeek} {month}/{date}</h1>
-                <div className={`${openedEnvelope ? 'translate-x-150' : 'translate-x-50 '} transition-all duration-350 translate-y-6`}>
+                <div className={`${openedEnvelope || openedCalendarMenu ? 'translate-x-150' : 'translate-x-50 '} transition-all duration-350 translate-y-6`}>
                   <div className={`
                     
                     ${isEnvelopeAnimating ? 'rotate-180' : 'rotate-0'} 
                     inset-shadow-sm transition-all duration-500 bg-gray-300 border-4 border-gray-400 rounded-full w-sm h-40 p-5 flex justify-between text-center`}>
                     <div
-  onClick={() => {
-    changeToEnvelopeMenu();
-    clickedConfirmBtn();
-    handleEnvelopeBtn();
-  }}
-  onMouseEnter={handleMouseEnter}
-  onMouseLeave={handleMouseLeave}
-  style={{
-    transition: clickedEnvelopeBtn ? 'none' : 'all 300ms',
-  }}
-  className={`
-  ${clickedEnvelopeBtn ? 'bg-white text-white border-white scale-90': 'bg-gray-200 border-blue-400 scale-100 hover:scale-110' } 
+                      onClick={() => {
+                        changeToEnvelopeMenu();
+                        clickedConfirmBtn();
+                        handleEnvelopeBtn();
+                      }}
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                      style={{
+                        transition: clickedEnvelopeBtn ? 'none' : 'all 100ms',
+                      }}
+                      className={`
+  ${clickedEnvelopeBtn ? 'bg-white text-white border-white scale-90' : 'bg-gray-200 border-blue-400 scale-100 hover:scale-110'} 
   transition-border rounded-full border-4 w-30 h-30 flex justify-center items-center font-semibold text-5xl shadow-2xl translate-x-6  hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] `}
->
+                    >
                       <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
                       </svg>
                     </div>
                     <div onClick={() => {
-                        changeToEnvelopeMenu()
-                        clickedConfirmBtn()
-                        handleEnvelopeBtn();
-                      }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} 
+                      changeToEnvelopeMenu()
+                      clickedConfirmBtn()
+                      handleEnvelopeBtn();
+                    }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                       style={{
                         transition: clickedEnvelopeBtn ? 'none' : 'all 100ms',
                       }}
-                      className={`${clickedEnvelopeBtn ? 'bg-white text-white border-white scale-90': 'bg-gray-200 border-blue-400 scale-100 hover:scale-110'} transition-border rotate-180 ease-in-out rounded-full border-4 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl -translate-x-6 translate-y-[37px] hover:shadow-[0_0_10px_rgba(59,130,246,0.7)]`}>
+                      className={`${clickedEnvelopeBtn ? 'bg-white text-white border-white scale-90' : 'bg-gray-200 border-blue-400 scale-100 hover:scale-110'} transition-border rotate-180 ease-in-out rounded-full border-4 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl -translate-x-6 translate-y-[37px] hover:shadow-[0_0_10px_rgba(59,130,246,0.7)]`}>
                       <span className={`${clickedEnvelopeBtn ? 'bg-white text-white' : 'bg-gray-400 text-gray-300'}   rounded-xl font-semibold !py-2 !px-3`}>Wii</span>
                     </div>
                   </div>

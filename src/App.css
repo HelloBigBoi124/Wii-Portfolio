@@ -225,3 +225,40 @@
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
 }
+
+@keyframes isFalling {
+  0% {
+    transform: translateY(-100vh)  rotate(10deg);
+  }
+  50% {
+    transform: translateY(100px) rotate(10deg);
+  }
+  75% {
+    transform:  rotate(-3deg);
+  }
+  
+  85% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes isAscending {
+  0% {
+    transform: translateY(0)  rotate(0deg);
+  }
+  
+  100% {
+    transform: translateY(-100vh) rotate(-10deg);
+  }
+}
+
+.calendar-is-falling {
+  animation: isFalling 0.5s ease-in-out forwards;
+}
+
+.calendar-is-ascending {
+  animation: isAscending 0.3s ease-in-out forwards;
+}
