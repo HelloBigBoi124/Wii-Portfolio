@@ -226,7 +226,7 @@
   50% { transform: scale(1.1); }
 }
 
-@keyframes isFalling {
+@keyframes calendarIsFalling {
   0% {
     transform: translateY(-100vh)  rotate(10deg);
   }
@@ -245,7 +245,7 @@
   }
 }
 
-@keyframes isAscending {
+@keyframes calendarIsAscending {
   0% {
     transform: translateY(0)  rotate(0deg);
   }
@@ -255,10 +255,100 @@
   }
 }
 
+.calendar-box {
+  transform: translateY(-100vh);
+}
+
 .calendar-is-falling {
-  animation: isFalling 0.5s ease-in-out forwards;
+  animation: calendarIsFalling 0.5s ease-in-out forwards;
+  animation-delay: 16ms;
 }
 
 .calendar-is-ascending {
-  animation: isAscending 0.3s ease-in-out forwards;
+  animation: calendarIsAscending 0.3s ease-in-out forwards;
+  animation-delay: 16ms;
+}
+
+@keyframes firstNotepadIsFalling {
+  0% { transform: translateY(-100vh)  rotate(10deg);}
+  50% {transform: translateY(0) rotate(10deg);}
+  75% {transform: translateY(-20px)  rotate(-3deg);}
+  85% {transform: translateY(0) rotate(1deg);}
+  100% {transform: rotate(0deg);}
+}
+
+@keyframes firstNotepadIsAscending {
+  0% {transform: translateY(0)  rotate(0deg);}
+  100% {transform: translateY(-100vh) rotate(10deg);}
+}
+
+.first-notepad-is-falling {
+  animation: firstNotepadIsFalling 0.4s ease-in-out both;
+  animation-delay: 16ms;
+}
+
+.first-notepad-is-ascending {
+  animation: firstNotepadIsAscending 0.3s ease-out both;
+  animation-delay: 16ms;
+}
+
+@keyframes secondNotepadIsFalling {
+  0% {transform: translateY(-100vh)  rotate(-5deg);}
+  50% {transform: translateY(0) rotate(-4deg);}
+  75% {transform: translateY(-20px)  rotate(2deg);}
+  85% {transform: translateY(0) rotate(-2deg);}
+  100% {transform: rotate(0deg);}
+}
+
+@keyframes secondNotepadIsAscending {
+  0% {transform: translateY(0)  rotate(0deg);}
+  100% {transform: translateY(-100vh) rotate(-5deg);}
+}
+
+.second-notepad-is-falling {
+  animation: secondNotepadIsFalling 0.6s ease-in-out both;
+  animation-delay: 16ms;
+}
+
+.second-notepad-is-ascending {
+  animation: secondNotepadIsAscending 0.4s ease-out both;
+  animation-delay: 16ms;
+}
+
+@keyframes thirdNotepadIsFalling {
+  0% {transform: translateY(-100vh)  rotate(15deg);}
+  50% {transform: translateY(0) rotate(10deg);}
+  75% {transform: translateY(-20px)  rotate(-5deg);}
+  85% {transform: translateY(0) rotate(3deg);}
+  100% {transform: rotate(0deg);}
+}
+
+@keyframes thirdNotepadIsAscending {
+  0% {transform: translateY(0)  rotate(0deg);}
+  100% {transform: translateY(-100vh) rotate(20deg);}
+}
+
+.third-notepad-is-falling {
+  animation: thirdNotepadIsFalling 0.5s ease-in-out both;
+  animation-delay: 16ms;
+}
+
+.third-notepad-is-ascending {
+  animation: thirdNotepadIsAscending 0.35s ease-out both;
+  animation-delay: 16ms;
+}
+
+/* No seu App.css ou index.css */
+@keyframes smooth-blink {
+  0%, 100% {
+    caret-color: #f63b3b; /* Cor sólida */
+  }
+  50% {
+    caret-color: rgb(246, 59, 59, 0.1)
+  }
+}
+
+.custom-caret-smooth {
+  caret-animation: manual;
+  animation: smooth-blink 1s ease-in-out infinite;
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import appJson from './apps.json'
+import notesJson from './notes.json'
 
 function App() {
 
@@ -56,44 +57,46 @@ function App() {
 
 
   const appObjects = appJson
+  const notesObjects = notesJson
 
   const [showWarning, setShowWarning] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const userReaded = useRef(false);
-
+  const [amountNotes, setAmountNotes] = useState(null);
   useEffect(() => {
-  const startExperience = () => {
-    if (!userReaded.current) {
-      userReaded.current = true
-      playConfirm();
-      setTimeout(() => {
-        setFadeOut(true)
+    const startExperience = () => {
+      if (!userReaded.current) {
+        setAmountNotes(notesObjects.length)
+        userReaded.current = true
+        playConfirm();
         setTimeout(() => {
-          setShowWarning(false);
-          playWiiMenuMusic();
+          setFadeOut(true)
+          setTimeout(() => {
+            setShowWarning(false);
+            playWiiMenuMusic();
+          }, 2000)
         }, 2000)
-      }, 2000)
+      }
     }
-  }
 
-  const handleKeyDown = (event) => {
-    if (event.code === "Space") {
+    const handleKeyDown = (event) => {
+      if (event.code === "Space") {
+        startExperience();
+      }
+    }
+
+    const handleClick = () => {
       startExperience();
     }
-  }
 
-  const handleClick = () => {
-    startExperience();
-  }
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("click", handleClick);
 
-  window.addEventListener("keydown", handleKeyDown);
-  window.addEventListener("click", handleClick);
-
-  return () => {
-    window.removeEventListener("keydown", handleKeyDown);
-    window.removeEventListener("click", handleClick);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   const [time, setTime] = useState("");
   const [period, setPeriod] = useState("");
@@ -280,17 +283,45 @@ function App() {
   }
 
   const [backIndexMenu, setBackIndexMenu] = useState(null)
+  const [clickedBackBtn, setClickedBackBtn] = useState(false);
+  const handleBackBtn = () => {
+    setClickedBackBtn(true);
+    setTimeout(() => {
+      setClickedBackBtn(false)
+    }, 60)
+  }
+
+  const [clickedPostBtn, setClickedPostBtn] = useState(false);
+  const handlePostBtn = () => {
+    setClickedPostBtn(true);
+    setTimeout(() => {
+      setClickedPostBtn(false)
+    }, 60)
+  }
+
 
   const closeIndexedMenu = (index) => {
-    switch(index) {
+    switch (index) {
       case 1:
-        setOpenedEnvelope(false); 
+        setOpenedEnvelope(false);
         break;
       case 2:
         setIsCalendarAnimating(false);
         setTimeout(() => {
           setOpenedCalendarMenu(false);
         }, 500)
+        break;
+      case 3:
+        if (isNotepadExpanded) {
+          handleCloseNotepad();
+        } else {
+          // Se não estiver expandido, feche o menu completo
+          handleCloseNotepad();
+          setIsNotepadAnimating(false);
+          setTimeout(() => {
+            setOpenedNotepadMenu(false);
+          }, 500);
+        }
         break;
       default:
         break;
@@ -323,11 +354,11 @@ function App() {
   const [isCalendarAnimating, setIsCalendarAnimating] = useState(false);
 
   const handleOpenCalendarMenu = () => {
-      setOpenedCalendarMenu(true);
-      setBackIndexMenu(2)
-      setTimeout(() => {
-        setIsCalendarAnimating(true);
-      }, 10)
+    setOpenedCalendarMenu(true);
+    setBackIndexMenu(2)
+    setTimeout(() => {
+      setIsCalendarAnimating(true);
+    }, 10)
   }
 
 
@@ -339,6 +370,46 @@ function App() {
       setClickedNotepadBtn(false)
     }, 60)
   }
+
+  const [openedNotepadMenu, setOpenedNotepadMenu] = useState(false);
+  const [isNotepadAnimating, setIsNotepadAnimating] = useState(false);
+
+  const handleOpenNotepadMenu = () => {
+    setOpenedNotepadMenu(true);
+    setBackIndexMenu(3)
+    setTimeout(() => {
+      setIsNotepadAnimating(true);
+    }, 10)
+  }
+
+  const [expandingNotepad, setExpandingNotepad] = useState(null); // qual notepad está expandindo (0, 1, 2)
+  const [notepadPosition, setNotepadPosition] = useState({ x: 0, y: 0, width: 0, height: 0 });
+  const [isNotepadExpanded, setIsNotepadExpanded] = useState(false);
+  const notepadRefs = useRef([]);
+
+
+  const handleOpenNotepad = (index) => {
+    clickedConfirmBtn();
+    const rect = notepadRefs.current[index].getBoundingClientRect();
+    setNotepadPosition({ x: rect.left, y: rect.top, width: rect.width, height: rect.height });
+    setExpandingNotepad(index);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsNotepadExpanded(true);
+      });
+    });
+  };
+
+  const handleCloseNotepad = () => {
+    setIsNotepadExpanded(false);
+    if (expandingNotepad === 0) {
+    setText('');
+  }
+    setTimeout(() => {
+      setExpandingNotepad(null);
+    }, 50);
+  };
 
   const [isStarting, setIsStarting] = useState(false);
   const [clickedStart, setClickedStart] = useState(false);
@@ -375,20 +446,33 @@ function App() {
 
   const [envelopeMenu, setEnvelopeMenu] = useState(false);
   const [isEnvelopeAnimating, setIsEnvelopeAnimating] = useState(false)
-  const [envelopeContent, setEnvelopeContent] = useState(null);
   const [showEnvelope, setShowEnvelope] = useState(false);
+  
+  const [numberCols, setNumberCols] = useState(null)
+
+  const calculateNotesGrid = (notes) => {
+    if (!notes) return;
+
+    // Para 12 notas, vai definir 4 colunas
+    const cols = Math.ceil(notes / 2);
+    setNumberCols(cols);
+
+    console.log(`Notas: ${notes}, Colunas: ${cols}`);
+  };
+
 
   const changeToEnvelopeMenu = () => {
     if (!envelopeMenu) {
       // PRIMEIRO: anima os apps para cima
       setIsEnvelopeAnimating(true);
-
       // DEPOIS: mostra o envelope (após a animação dos apps)
       setTimeout(() => {
         setEnvelopeMenu(true);
 
         setTimeout(() => {
           setShowEnvelope(true);
+          calculateNotesGrid(amountNotes)
+          console.log(numberCols)
         }, 50);
       }, 600); // 700ms = duração da transição dos apps
     } else {
@@ -405,6 +489,18 @@ function App() {
         }, 50);
       }, 300);
     }
+  }
+
+  const [text, setText] = useState('');
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Impede nova linha se já tem 4
+    }
+  };
+
+  const postNote = (imgurl, text) => {
+    text
   }
 
 
@@ -598,6 +694,12 @@ function App() {
     });
   };
 
+
+
+  
+  
+
+
   useEffect(() => {
     return () => {
       // Limpa todas as animações ao desmontar o componente
@@ -606,6 +708,7 @@ function App() {
       }
     };
   }, []);
+
   return (
     <>
       {showWarning && (
@@ -681,6 +784,32 @@ function App() {
             {envelopeMenu && (
 
               <div className="fixed inset-0 z-50 w-screen h-135 bg-gray-300 flex justify-center items-center  transition-all duration-500">
+
+                {/*grid de notas WIP*/}
+                <div className={`bg-red-200 gap-4 w-[95%] h-[95%] justify-items-center`}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: `repeat(${numberCols}, 1fr)`
+                  }}>
+                  {[...Array(amountNotes)].map((_, i) => (
+                    <div key={i} className={`hover:scale-110 inset-shadow-sm inset-shadow-gray-500 bg-gray-400 overflow-hidden wii-cursor select-none rounded-2xl border-5 border-white transition-all duration-100 ease-in-out w-[200px] h-[135px]`}>
+                      <h1 className={`text-white`}>Note {i + 1}</h1>
+                      <div className="bg-white h-full rounded-xl  p-4 flex flex-col flex-1">
+                        <div className={`w-full !px-5 !py-1 flex flex-col`}>
+                          <div className={`flex flex-row items-center`}>
+                            <div
+                              onMouseEnter={() => {}}
+                              className={`w-[50px] h-[50px] rounded-sm transition-all duration-100 ease-in-out shadow-sm border-2 border-gray-300 !p-2`}>
+                              <img src={`${notesObjects[i].noteimg}`} />
+                            </div>
+                          </div>
+                          <h1 className={`text-gray-400 font-semibold`}>{notesObjects[i].titulo.slice(0, 15)}{notesObjects[i].titulo.length > 15 && "..."}</h1>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
                 <img
                   onClick={() => handleOpenEnvelope()}
                   className={`
@@ -712,68 +841,248 @@ function App() {
             )}
 
             {openedCalendarMenu && (
-              <div className={`${isCalendarAnimating ? 'bg-gray-200/80' : 'bg-gray-200/0'} fixed inset-0 z-99 w-screen h-screen flex justify-center items-center transition-all duration-500`}>
-                <div className={`${isCalendarAnimating ? 'calendar-is-falling' : 'calendar-is-ascending' } shadow-xl  bg-gray-400 border-4 border-white w-[50vw] h-[calc(100vh-300px)]`}>
+              <>
 
-                  
+                {/* Calendar - sempre no DOM */}
+                <div className={`
+  fixed inset-0 z-98 w-screen h-screen
+  transition-opacity duration-700 ease-out
+  ${openedCalendarMenu && isCalendarAnimating ? 'opacity-100' : 'opacity-0'}
+  ${!openedCalendarMenu ? 'pointer-events-none' : ''}
+  bg-[repeating-linear-gradient(...)]
+`} />
+
+                <div className={`fixed inset-0 z-99 w-screen h-screen flex justify-center items-center
+  ${!openedCalendarMenu ? 'pointer-events-none' : ''}
+`}>
+                  <div className={`
+    calendar-box
+    ${openedCalendarMenu && isCalendarAnimating ? 'calendar-is-falling' : ''}
+    ${openedCalendarMenu && !isCalendarAnimating ? 'calendar-is-ascending' : ''}
+    shadow-xl bg-gray-400 border-4 border-white w-[50vw] h-[calc(100vh-300px)] pointer-events-auto
+  `} />
                 </div>
+              </>
+            )}
+
+            {openedNotepadMenu && (
+              <>
+                <div className={`
+  fixed inset-0 z-98 w-screen h-screen
+  transition-opacity duration-700 ease-out
+  ${isNotepadAnimating ? 'opacity-100' : 'opacity-0'}
+  bg-[repeating-linear-gradient(0deg,_rgba(255,255,255,0.9),_rgba(255,255,255,0.9)_1px,_transparent_1px,_transparent_5px)]
+`} />
+
+                {/* Container principal com grid - contém todos os 3 notepads */}
+                <div className="fixed inset-0 z-99 w-screen h-screen flex justify-center items-center pointer-events-none">
+                  <div className="grid grid-cols-3 gap-30 pointer-events-auto">
+
+                    {/* Notepad 1 */}
+                    {[0, 1, 2].map((i) => (
+                      <div
+                        key={i}
+                        ref={el => notepadRefs.current[i] = el}
+                        onClick={() => handleOpenNotepad(i)}
+                        className={`
+      ${isNotepadAnimating ? ['first-notepad-is-falling', 'second-notepad-is-falling', 'third-notepad-is-falling'][i] : ['first-notepad-is-ascending', 'second-notepad-is-ascending', 'third-notepad-is-ascending'][i]}
+      ${expandingNotepad === i ? 'opacity-0' : 'opacity-100 hover:scale-110'}
+      transition-all duration-200 shadow-xl rounded-2xl bg-gray-400 border-4 border-white w-[275px] h-[250px]
+    `}
+                      >
+                        {/* conteúdo de cada notepad */}
+                      </div>
+                    ))}
+
+                  </div>
+                </div>
+
+
+
+              </>
+
+            )}
+            {expandingNotepad !== null && (
+              <div
+                className={`fixed inset-shadow-sm inset-shadow-gray-500 bg-gray-400 overflow-hidden wii-cursor select-none rounded-2xl border-10 border-white transition-all duration-200 ease-in-out`}
+                style={{
+                  top: isNotepadExpanded ? '10vh' : notepadPosition.y,
+                  left: isNotepadExpanded ? '15vw' : notepadPosition.x,
+                  width: isNotepadExpanded ? '70vw' : notepadPosition.width,
+                  height: isNotepadExpanded ? '80vh' : notepadPosition.height,
+                  opacity: isNotepadExpanded ? 1 : 0,
+                  zIndex: 200,
+                }}
+              >
+                {/* Conteúdo diferente para cada notepad */}
+                {expandingNotepad === 0 && (
+  <div className="flex flex-col w-full h-full !pt-5">
+    <h1 className="text-3xl text-white font-semibold">Memo</h1>
+    
+    <div className="inset-shadow-sm inset-shadow-gray-500 bg-white rounded-xl !mt-5 p-4 flex flex-col flex-1">
+      <div className={`w-full !px-10 !py-5 flex flex-col flex-1`}>
+        <div className={`flex flex-row items-center gap-2`}>
+          <div
+            onMouseEnter={() => { hoverItem() }}
+            className={`w-[150px] h-[150px] hover:scale-110 transition-all duration-100 ease-in-out shadow-sm border-2 border-gray-300 rounded-3xl !p-2`}>
+            <img src={`/assets/apps/spinning_dvd-cd.gif`} />
+          </div>
+          <h1 className={`text-2xl`}><i className="bi bi-arrow-left"></i> Add a Image</h1>
+        </div>
+        
+        <div className={`flex flex-col items-center !mt-12 w-[95%] relative`}>
+          <textarea
+            rows={4}
+            value={text}
+            maxLength={250}
+            onChange={(e) => {
+              const lines = e.target.value.split('\n');
+              if (lines.length <= 4) {
+                setText(e.target.value);
+              }
+            }}
+            onKeyDown={handleKeyDown}
+            className="
+              custom-caret-smooth wii-cursor block w-full border-0 focus:ring-0 
+              focus:outline-none resize-none text-gray-700 text-2xl bg-transparent 
+              relative z-10
+              [&::-webkit-scrollbar]:w-2
+              [&::-webkit-scrollbar-track]:rounded-full
+              [&::-webkit-scrollbar-track]:bg-gray-200
+              [&::-webkit-scrollbar-thumb]:rounded-full
+              [&::-webkit-scrollbar-thumb]:bg-gray-400
+              [&::-webkit-scrollbar-thumb]:hover:bg-gray-500
+            "
+            style={{
+              lineHeight: '2.5rem',
+              minHeight: '10rem',
+              backgroundImage: `repeating-linear-gradient(
+                transparent 0px,
+                transparent 2.3rem,
+                #d1d5db 2.3rem,
+                #d1d5db 2.5rem
+              )`,
+              backgroundAttachment: 'local'
+            }}
+            placeholder="Digite seu memo..."
+          />
+        </div>
+        <h1 className="text-4xl font-semibold !mt-auto">Wii</h1>
+      </div>
+    </div>
+  </div>
+)}
+                {expandingNotepad === 1 && (
+                  <div className="flex flex-col w-full h-full p-5">
+                    <h1 className="text-xl text-white font-semibold">Notepad 2</h1>
+                    <div className="flex-1 bg-white rounded-xl mt-2 p-4" />
+                  </div>
+                )}
+                {expandingNotepad === 2 && (
+                  <div className="flex flex-col w-full h-full p-5">
+                    <h1 className="text-xl text-white font-semibold">Notepad 3</h1>
+                    <div className="flex-1 bg-white rounded-xl mt-2 p-4" />
+                  </div>
+                )}
               </div>
             )}
 
             <section>
               <div className={`${isEnvelopeAnimating ? 'inset-shadow-none' : 'inset-shadow-sm'} transition-all bg-gray-300 h-screen flex justify-between  wii-cursor`}>
                 <div className={`
-                  ${openedEnvelope || openedCalendarMenu ? '-translate-x-150' : '-translate-x-50'}
+                  ${openedEnvelope || openedCalendarMenu || openedNotepadMenu ? '-translate-x-150' : '-translate-x-50'}
                   ${isEnvelopeAnimating ? '-rotate-180 -translate-x-50' : 'rotate-0 -translate-x-80'} 
                   inset-shadow-sm w-lg transition-all duration-350 bg-gray-300 border-4 border-gray-400 rounded-full  h-40 p-5 flex justify-between text-center translate-y-6`}>
                   <div className={`flex grid-row gap-2 translate-x-6 translate-y-[37px]`}>
+                    <div id="notepad" onClick={() => {
+                      clickedConfirmBtn();
+                      handleNotepadBtn();
+                      handleOpenNotepadMenu();
+                    }}
+                      style={{
+                        transition: clickedNotepadBtn ? 'none' : 'all 100ms',
+                      }}
+                      onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={`${clickedNotepadBtn ? 'bg-white border-white scale-90 hover:border-white' : 'bg-gray-200 border-blue-400 hover:scale-110 scale-100 hover:border-blue-400'} rotate-180 ease-in-out rounded-full border-4 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl    hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all`}>
+                      <img className={`${clickedNotepadBtn ? 'opacity-0' : 'opacity-100'} select-none drag-none rounded-sm size-15 h-20 -translate-y-1`} src="/assets/notepad.png" alt="calendar-button"></img>
+                    </div>
                     <div id="calendar" onClick={() => {
                       clickedConfirmBtn();
                       handleCalendarBtn();
                       handleOpenCalendarMenu();
-                    }} 
-                    style={{
-                        transition: clickedEnvelopeBtn ? 'none' : 'all 100ms',
+                    }}
+                      style={{
+                        transition: clickedCalendarBtn ? 'none' : 'all 100ms',
                       }}
                       onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={`${clickedCalendarBtn ? 'bg-white border-white scale-90 hover:border-white' : 'bg-gray-200 border-blue-400 hover:scale-110  scale-100 hover:border-blue-400'} rotate-180 ease-in-out rounded-full  border-4  w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl    hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all  `}>
                       <img className={`${clickedCalendarBtn ? 'opacity-0' : 'opacity-100'} rounded-sm size-17`} src="/assets/calendarbtn.png" alt="calendar-button"></img>
                     </div>
-                    <div id="notepad" onClick={() => {
-                      clickedConfirmBtn();
-                      handleNotepadBtn();
-                    }} 
-                    style={{
-                        transition: clickedEnvelopeBtn ? 'none' : 'all 100ms',
-                      }}
-                    onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={`${clickedNotepadBtn ? 'bg-white border-white scale-90 hover:border-white' : 'bg-gray-200 border-blue-400 hover:scale-110 scale-100 hover:border-blue-400'} rotate-180 ease-in-out rounded-full border-4 w-30 h-30 flex justify-center items-center  text-4xl shadow-2xl    hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all`}>
-                      <img className={`${clickedNotepadBtn ? 'opacity-0' : 'opacity-100'} select-none drag-none rounded-sm size-15 h-20 -translate-y-1`} src="/assets/notepad.png" alt="calendar-button"></img>
-                    </div>
                   </div>
                   <div onClick={() => {
                     clickedConfirmBtn()
-                  }} 
-                  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="text-gray-400 rounded-full bg-gray-200 border-4 border-blue-400 w-30 h-30 flex justify-center items-center font-semibold text-4xl shadow-2xl -translate-x-6 hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110">Wii</div>
+                  }}
+                    onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="text-gray-400 rounded-full bg-gray-200 border-4 border-blue-400 w-30 h-30 flex justify-center items-center font-semibold text-4xl shadow-2xl -translate-x-6 hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110">Wii</div>
                 </div>
                 <div className={`
-                  ${openedEnvelope || openedCalendarMenu ? '-translate-x-50' : '-translate-x-150'}
+                  ${openedEnvelope || openedCalendarMenu || openedNotepadMenu ? '-translate-x-50' : '-translate-x-150'}
                   ${isEnvelopeAnimating && openedEnvelope ? '' : ''} 
                   z-999 absolute inset-shadow-sm w-lg transition-all duration-350 bg-gray-300 border-4 border-gray-400 rounded-full  h-40 p-5 flex justify-between text-center translate-y-6`}>
                   <div className={`flex justify-end -translate-x-6 w-full`}>
                     <div
                       onClick={() => {
                         closeIndexedMenu(backIndexMenu)
+                        handleBackBtn()
                         playConfirm()
                       }}
-                      onMouseEnter={handleMouseEnter}
-                      onMouseLeave={handleMouseLeave}
-                      className={`text-gray-600 font-semibold ease-in-out rounded-full bg-gray-200 border-4 border-blue-400 w-60 h-30 flex justify-center items-center  text-4xl shadow-2xl   hover:border-blue-400 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-all duration-300 hover:scale-110`}>
+                      onMouseEnter={() => {
+                        hoverItem()
+                      }}
+
+                      style={{
+                        transition: clickedBackBtn ? 'none' : 'all 100ms',
+                      }}
+                      className={`${clickedBackBtn ? 'bg-white border-white scale-90 hover:border-white text-white' : 'bg-gray-200 border-blue-400 hover:scale-110  scale-100 hover:border-blue-400 text-gray-600'}
+                       font-semibold rounded-full border-4 w-60 h-30 flex justify-center items-center  text-4xl shadow-2xl   hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-border ease-in-out`}>
                       Back
                     </div>
+                    
                   </div>
 
+                  
+
                 </div>
+                
+                
                 <h1 className="text-gray-500 font-semibold text-5xl mt-2 -translate-x-15">{dayWeek} {month}/{date}</h1>
-                <div className={`${openedEnvelope || openedCalendarMenu ? 'translate-x-150' : 'translate-x-50 '} transition-all duration-350 translate-y-6`}>
+                {/*DIV DO BOTÃO POST*/}
+                <div className={`
+                  ${openedNotepadMenu && expandingNotepad !== null ? 'translate-x-[78vw]' : 'translate-x-[100vw]'}
+                  ${isEnvelopeAnimating && openedEnvelope ? '' : ''} 
+                  z-999 absolute inset-shadow-sm w-lg transition-all duration-350 bg-gray-300 border-4 border-gray-400 rounded-full  h-40 p-5 flex justify-between text-center translate-y-6`}>
+                  <div className={`flex justify-start translate-x-6 w-full`}>
+                    <div
+                      onClick={() => {
+                        clickedConfirmBtn()
+                        handlePostBtn()
+                        postNote()
+                      }}
+                      onMouseEnter={() => {
+                        hoverItem()
+                      }}
+
+                      style={{
+                        transition: clickedPostBtn ? 'none' : 'all 100ms',
+                      }}
+                      className={`${clickedPostBtn ? 'bg-white border-white scale-90 hover:border-white text-white' : 'bg-gray-200 border-blue-400 hover:scale-110  scale-100 hover:border-blue-400 text-gray-600'}
+                       font-semibold rounded-full border-4 w-60 h-30 flex justify-center items-center  text-4xl shadow-2xl   hover:shadow-[0_0_10px_rgba(59,130,246,0.7)] transition-border ease-in-out`}>
+                      Post
+                    </div>
+                    
+                  </div>
+
+                  
+
+                </div>
+                <div className={`${openedEnvelope || openedCalendarMenu || openedNotepadMenu ? 'translate-x-150' : 'translate-x-50 '} transition-all duration-350 translate-y-6`}>
                   <div className={`
                     
                     ${isEnvelopeAnimating ? 'rotate-180' : 'rotate-0'} 
